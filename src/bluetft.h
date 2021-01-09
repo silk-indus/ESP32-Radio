@@ -1,60 +1,93 @@
-// ILI9341.h
+// bluetft.h
 //
-// Contributed by Uksa007@gmail.com
 // Separated from the main sketch to allow several display types.
-// Includes for various ILI9341 displays.  Tested on 320 x 240.
-// Requires Adafruit ILI9341 library, available from library manager.
-// Below set your dsp_getwidth() and dsp_getwidth() to suite your display.
+// Includes for various ST7735 displays.  Size is 160 x 128.  Select INITR_BLACKTAB
+// for this and set dsp_getwidth() to 160.
+// Works also for the 128 x 128 version.  Select INITR_144GREENTAB for this and
+// set dsp_getwidth() to 128.
 
-#include <Adafruit_ILI9341.h>
+#include <TFT_eSPI.h> // Hardware-specific library
+//#include <Adafruit_ST7735.h>
+#include <SPI.h>
+#define FONT_SMALL "arialbd8"
+#define FONT_MEDIUM "arialbd11"
+#define FONT_BIG "arialbd16"
+#define FONT_NUMS "nums"
+
+TFT_eSPI tft = TFT_eSPI(); // Invoke custom library
 
 // Color definitions for the TFT screen (if used)
 // TFT has bits 6 bits (0..5) for RED, 6 bits (6..11) for GREEN and 4 bits (12..15) for BLUE.
-#define BLACK   ILI9341_BLACK
-#define BLUE    ILI9341_BLUE
-#define RED     ILI9341_RED
-#define GREEN   ILI9341_GREEN
+#define BLACK   ST7735_BLACK
+#define BLUE    ST7735_BLUE
+#define RED     ST7735_RED
+#define GREEN   ST7735_GREEN
 #define CYAN    GREEN | BLUE
 #define MAGENTA RED | BLUE
 #define YELLOW  RED | GREEN
 #define WHITE   RED | BLUE | GREEN
+#define ORANGE  0xFEA8
 
 // Data to display.  There are TFTSECS sections
-#define TFTSECS 4
-scrseg_struct     tftdata[TFTSECS] =                        // Screen divided in 3 segments + 1 overlay
-{                                                           // One text line is 8 pixels
-  { false, WHITE,   0,  8, "" },                            // 1 top line
-  { false, CYAN,   20, 64, "" },                            // 8 lines in the middle
-  { false, YELLOW, 90, 32, "" },                            // 4 lines at the bottom
-  { false, GREEN,  90, 32, "" }                             // 4 lines at the bottom for rotary encoder
+#define TFTSECS 5
+
+struct scrseg_struct                                  // For screen segments
+{
+  bool     update_req ;                               // Request update of screen
+  uint16_t color ;                                    // Textcolor
+  uint16_t x ;                                        // Begin of segment row x
+  uint16_t y ;                                        // Begin of segment row y
+  uint16_t width ;                                    // Width of segment 0=full
+  uint16_t height ;                                   // Height of segment
+  String   str ;                                      // String to be displayed
 } ;
 
 
-Adafruit_ILI9341*     tft = NULL ;                                  // For instance of display driver
+scrseg_struct     tftdata[TFTSECS] =                        // Screen divided in 3 segments + 1 overlay
+{                                                           // One text line is 8 pixels
+  { false, WHITE,  0, 4,  0, 8,  "" },                            // Label
+  { false, CYAN,   0, 18, 0, 68, "" },                            // Stream name
+  { false, YELLOW, 40,90, 0, 32, "" },                            // Station name
+  { false, GREEN,  0, 90, 0, 32, "" },                            // the bottom for rotary encoder
+  { false, ORANGE, 0, 90, 40,32, "" }                             // CH number
+} ;
 
-// Various macro's to mimic the ILI9341 version of display functions
-#define dsp_setRotation()       tft->setRotation ( 3 )             // Use landscape format (3 for upside down)
-#define dsp_print(a)            tft->print ( a )                   // Print a string 
-#define dsp_println(b)          tft->println ( b )                 // Print a string followed by newline 
-#define dsp_fillRect(a,b,c,d,e) tft->fillRect ( a, b, c, d, e ) ;  // Fill a rectange
-#define dsp_setTextSize(a)      tft->setTextSize(a)                // Set the text size
-#define dsp_setTextColor(a)     tft->setTextColor(a)               // Set the text color
-#define dsp_setCursor(a,b)      tft->setCursor ( a, b )            // Position the cursor
-#define dsp_erase()             tft->fillScreen ( BLACK ) ;        // Clear the screen
-#define dsp_getwidth()          320                                // Adjust to your display
-#define dsp_getheight()         240                                // Get height of screen
+
+
+// Various macro's to mimic the ST7735 version of display functions
+#define dsp_setRotation(a)       tft.setRotation ( a )             // Use landscape format (3 for upside down)
+#define dsp_print(a)            tft.print ( a )                   // Print a string 
+#define dsp_println(b)          tft.println ( b )                 // Print a string followed by newline 
+#define dsp_fillRect(a,b,c,d,e) tft.fillRect ( a, b, c, d, e ) ;  // Fill a rectange
+#define dsp_setTextSize(a)      tft.setTextSize(a)                // Set the text size
+#define dsp_setTextColor(a)     tft.setTextColor(a)               // Set the text color
+#define dsp_setCursor(a,b)      tft.setCursor ( a, b )            // Position the cursor
+//#define dsp_setFont()           tft.setFreeFont(&c__windows_Fonts_arial8pt8b);
+#define dsp_erase()             tft.fillScreen ( BLACK ) ;        // Clear the screen
+#define dsp_getwidth()          160                                // Adjust to your display
+#define dsp_getheight()         128                                // Get height of screen
 #define dsp_update()                                               // Updates to the physical screen
 #define dsp_usesSPI()           true                               // Does use SPI
 
 
 bool dsp_begin()
 {
-  tft = new Adafruit_ILI9341 ( ini_block.tft_cs_pin,
-                               ini_block.tft_dc_pin ) ;            // Create an instant for TFT
+  
+// Uncomment one of the following initR lines for ST7735R displays
+  //tft.initR ( INITR_GREENTAB ) ;                               // Init TFT interface
+  //tft.initR ( INITR_REDTAB ) ;                                 // Init TFT interface
+  
+  tft.init (  ) ;                                 // Init TFT interface
+  Serial.println(F("TFT 1.8\" SPI TFT Test!     "));
 
-  tft->begin();                                                    // Init TFT interface
-  return ( tft != NULL ) ;
+//tft.initR ( INITR_144GREENTAB ) ;                            // Init TFT interface
+  //tft.initR ( INITR_MINI160x80 ) ;                             // Init TFT interface
+  //tft.initR ( INITR_BLACKTAB ) ;                               // Init TFT interface (160x128)
+  // Uncomment the next line for ST7735B displays
+  //tft_initB() ;
+  return ( true ) ;
 }
+
 
 //**************************************************************************************************
 //                                      D I S P L A Y B A T T E R Y                                *
@@ -65,7 +98,7 @@ bool dsp_begin()
 //**************************************************************************************************
 void displaybattery()
 {
-  if ( tft )
+  if ( true )
   {
     if ( ini_block.bat0 < ini_block.bat100 )              // Levels set in preferences?
     {
@@ -101,21 +134,21 @@ void displaybattery()
 //**************************************************************************************************
 void displayvolume()
 {
-  if ( tft )
+  if ( true )
   {
     static uint8_t oldvol = 0 ;                         // Previous volume
     uint8_t        newvol ;                             // Current setting
-    uint16_t       len ;                                // Length of volume indicator in pixels
+    uint16_t       pos ;                                // Positon of volume indicator
 
-    newvol = vs1053player->getVolume() ;                // Get current volume setting
+    newvol = vs1053player.getVolume() ;                // Get current volume setting
     if ( newvol != oldvol )                             // Volume changed?
     {
       oldvol = newvol ;                                 // Remember for next compare
-      len = map ( newvol, 0, 100, 0, dsp_getwidth() ) ; // Compute length on TFT
+      pos = map ( newvol, 0, 100, 0, dsp_getwidth() ) ; // Compute position on TFT
       dsp_fillRect ( 0, dsp_getheight() - 2,
-                     len, 2, RED ) ;                    // Paint red part
-      dsp_fillRect ( len, dsp_getheight() - 2,
-                     dsp_getwidth() - len, 2, GREEN ) ; // Paint green part
+                     pos, 2, RED ) ;                    // Paint red part
+      dsp_fillRect ( pos, dsp_getheight() - 2,
+                     dsp_getwidth() - pos, 2, GREEN ) ; // Paint green part
     }
   }
 }
@@ -143,15 +176,17 @@ void displaytime ( const char* str, uint16_t color )
     }
     return ;                                       // No actual display yet
   }
-  if ( tft )                                       // TFT active?
+  if ( true )                                       // TFT active?
   {
     dsp_setTextColor ( color ) ;                   // Set the requested color
     for ( i = 0 ; i < 8 ; i++ )                    // Compare old and new
     {
       if ( str[i] != oldstr[i] )                   // Difference?
       {
-        dsp_fillRect ( pos, 0, 6, 8, BLACK ) ;     // Clear the space for new character
-        dsp_setCursor ( pos, 0 ) ;                 // Prepare to show the info
+        dsp_fillRect ( pos, tftdata[0].y , 6, tftdata[0].height, BLACK ) ;     // Clear the space for new character
+        tft.setTextFont(1);
+        dsp_setTextSize ( 1 ) ; 
+        dsp_setCursor ( pos, tftdata[0].y ) ;                 // Prepare to show the info
         dsp_print ( str[i] ) ;                     // Show the character
         oldstr[i] = str[i] ;                       // Remember for next compare
       }
@@ -159,5 +194,3 @@ void displaytime ( const char* str, uint16_t color )
     }
   }
 }
-
-

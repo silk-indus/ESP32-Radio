@@ -36,6 +36,9 @@ Features:
 See documentation in doc/pdf-file.
 
 Last changes:
+- 09-jan-2021, Migrated to Platformio, added station number field, CP1250 track info added (dot after # in station name), 
+               tft-eSPI lib added with smooth fonts in spiffs, integrated VS1053 library
+Silk fork
 - 14-oct-2020, Clear artist and song on display at new station connect.
 - 18-oct-2020, Fixed LCD2004 error.
 - 30-sep-2020, Ready for ch376msc library version 1.4.4.

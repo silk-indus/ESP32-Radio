@@ -1,19 +1,19 @@
-// bluetft.h
+// ILI9341.h
 //
+// Contributed by Uksa007@gmail.com
 // Separated from the main sketch to allow several display types.
-// Includes for various ST7735 displays.  Size is 160 x 128.  Select INITR_BLACKTAB
-// for this and set dsp_getwidth() to 160.
-// Works also for the 128 x 128 version.  Select INITR_144GREENTAB for this and
-// set dsp_getwidth() to 128.
+// Includes for various ILI9341 displays.  Tested on 320 x 240.
+// Requires Adafruit ILI9341 library, available from library manager.
+// Below set your dsp_getwidth() and dsp_getwidth() to suite your display.
 
-#include <Adafruit_ST7735.h>
+#include <Adafruit_ILI9341.h>
 
 // Color definitions for the TFT screen (if used)
 // TFT has bits 6 bits (0..5) for RED, 6 bits (6..11) for GREEN and 4 bits (12..15) for BLUE.
-#define BLACK   ST7735_BLACK
-#define BLUE    ST7735_BLUE
-#define RED     ST7735_RED
-#define GREEN   ST7735_GREEN
+#define BLACK   ILI9341_BLACK
+#define BLUE    ILI9341_BLUE
+#define RED     ILI9341_RED
+#define GREEN   ILI9341_GREEN
 #define CYAN    GREEN | BLUE
 #define MAGENTA RED | BLUE
 #define YELLOW  RED | GREEN
@@ -30,10 +30,10 @@ scrseg_struct     tftdata[TFTSECS] =                        // Screen divided in
 } ;
 
 
-Adafruit_ST7735*     tft = NULL ;                                  // For instance of display driver
+Adafruit_ILI9341*     tft = NULL ;                                  // For instance of display driver
 
-// Various macro's to mimic the ST7735 version of display functions
-#define dsp_setRotation()       tft->setRotation ( 1 )             // Use landscape format (3 for upside down)
+// Various macro's to mimic the ILI9341 version of display functions
+#define dsp_setRotation()       tft->setRotation ( 3 )             // Use landscape format (3 for upside down)
 #define dsp_print(a)            tft->print ( a )                   // Print a string 
 #define dsp_println(b)          tft->println ( b )                 // Print a string followed by newline 
 #define dsp_fillRect(a,b,c,d,e) tft->fillRect ( a, b, c, d, e ) ;  // Fill a rectange
@@ -41,28 +41,20 @@ Adafruit_ST7735*     tft = NULL ;                                  // For instan
 #define dsp_setTextColor(a)     tft->setTextColor(a)               // Set the text color
 #define dsp_setCursor(a,b)      tft->setCursor ( a, b )            // Position the cursor
 #define dsp_erase()             tft->fillScreen ( BLACK ) ;        // Clear the screen
-#define dsp_getwidth()          160                                // Adjust to your display
-#define dsp_getheight()         128                                // Get height of screen
+#define dsp_getwidth()          320                                // Adjust to your display
+#define dsp_getheight()         240                                // Get height of screen
 #define dsp_update()                                               // Updates to the physical screen
 #define dsp_usesSPI()           true                               // Does use SPI
 
 
 bool dsp_begin()
 {
-  tft = new Adafruit_ST7735 ( ini_block.tft_cs_pin,
-                              ini_block.tft_dc_pin, -1 ) ;        // Create an instant for TFT
-  // Uncomment one of the following initR lines for ST7735R displays
-  //tft->initR ( INITR_GREENTAB ) ;                               // Init TFT interface
-  //tft->initR ( INITR_REDTAB ) ;                                 // Init TFT interface
-  tft->initR ( INITR_BLACKTAB ) ;                                 // Init TFT interface
-  //tft->initR ( INITR_144GREENTAB ) ;                            // Init TFT interface
-  //tft->initR ( INITR_MINI160x80 ) ;                             // Init TFT interface
-  //tft->initR ( INITR_BLACKTAB ) ;                               // Init TFT interface (160x128)
-  // Uncomment the next line for ST7735B displays
-  //tft_initB() ;
+  tft = new Adafruit_ILI9341 ( ini_block.tft_cs_pin,
+                               ini_block.tft_dc_pin ) ;            // Create an instant for TFT
+
+  tft->begin();                                                    // Init TFT interface
   return ( tft != NULL ) ;
 }
-
 
 //**************************************************************************************************
 //                                      D I S P L A Y B A T T E R Y                                *
@@ -113,17 +105,17 @@ void displayvolume()
   {
     static uint8_t oldvol = 0 ;                         // Previous volume
     uint8_t        newvol ;                             // Current setting
-    uint16_t       pos ;                                // Positon of volume indicator
+    uint16_t       len ;                                // Length of volume indicator in pixels
 
     newvol = vs1053player->getVolume() ;                // Get current volume setting
     if ( newvol != oldvol )                             // Volume changed?
     {
       oldvol = newvol ;                                 // Remember for next compare
-      pos = map ( newvol, 0, 100, 0, dsp_getwidth() ) ; // Compute position on TFT
+      len = map ( newvol, 0, 100, 0, dsp_getwidth() ) ; // Compute length on TFT
       dsp_fillRect ( 0, dsp_getheight() - 2,
-                     pos, 2, RED ) ;                    // Paint red part
-      dsp_fillRect ( pos, dsp_getheight() - 2,
-                     dsp_getwidth() - pos, 2, GREEN ) ; // Paint green part
+                     len, 2, RED ) ;                    // Paint red part
+      dsp_fillRect ( len, dsp_getheight() - 2,
+                     dsp_getwidth() - len, 2, GREEN ) ; // Paint green part
     }
   }
 }
@@ -167,4 +159,5 @@ void displaytime ( const char* str, uint16_t color )
     }
   }
 }
+
 
