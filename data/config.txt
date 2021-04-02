@@ -1,0 +1,62 @@
+clk_dst = 1                                          # Offset during daylight saving time (hours)
+clk_offset = 1                                       # Offset with respect to UTC in hours
+clk_server = pool.ntp.org                            # Time server to be used
+#
+gpio_00 = uppreset = 1
+gpio_14 = stop
+gpio_17 = resume
+gpio_34 = station = icecast.omroep.nl:80/radio1-bb-mp3
+#
+ir_02FD = stop
+ir_22DD = downpreset = 1
+ir_52AD = mute
+ir_629D = upvolume = 2
+ir_A857 = downvolume = 2
+ir_C23D = uppreset = 1
+#
+pin_ir = 35                                          # GPIO Pin number for IR receiver VS1838B
+pin_sd_cs = 21                                       # GPIO Pin number for SD card "CS"
+pin_tft_cs = 15                                      # GPIO Pin number for TFT "CS"
+pin_tft_dc = 2                                       # GPIO Pin number for TFT "DC"
+pin_vs_cs = 5                                        # GPIO Pin number for VS1053 "CS"
+pin_vs_dcs = 32                                      # GPIO Pin number for VS1053 "DCS"
+pin_vs_dreq = 4                                      # GPIO Pin number for VS1053 "DREQ"
+#
+preset = 8
+preset_00 = 109.206.96.34:8100                       #  0 - NAXI LOVE RADIO, Belgrade, Serbia
+preset_01 = icecast.stv.livebox.sk/slovensko_128.mp3 #  1 - Slovensko
+preset_02 = icecast.stv.livebox.sk/devin_128.mp3     #  2 - Devín
+preset_03 = icecast.stv.livebox.sk/litera_128.mp3    #  3 - Litera
+preset_04 = 109.71.67.102:8000/beta_live_high.mp3    #  4 - Radio beta
+preset_05 = 109.71.67.102:8000/beta_cspop.mp3        #. 5 - CS pop
+preset_06 = stream2.bestfm.sk/128.mp3                #  6 - Best FM
+preset_07 = stream.radioservices.sk/jemne-hi.mp3     #  7 - Rádio jemné
+preset_08 = stream.radioservices.sk/goldenhits.mp3   #  8 - Vlna hits
+preset_09 = stream.expres.sk/96.mp3                  #  9 - Expres
+preset_10 = online.radiorelax.ua/RadioRelax          # 10 - Relax
+preset_11 = online.radiorelax.ua/RadioRelax_Int      # 11 - RadioRelax Int
+preset_12 = online.radiorelax.ua/RadioRelax_Instrumental # 12 - RadioRelax Instrumental
+preset_13 = online.radiorelax.ua/RadioRelax_Cafe     # 13 - RadioRelax Cafe
+preset_14 = online.radioplayer.ua/RadioClassic       # 14 - Radio Classic
+preset_15 = stream.rusyn.fm/rusyny.mp3               # 15 - ????? ??
+preset_16 = listen6.myradio24.com/vitaminfm          # 16 - ??????? FM
+preset_17 = air.radiorecord.ru:805/chil_128          # 17 - Chill out
+preset_18 = listen2.myradio24.com/4156               # 18 - ????? ??????????
+preset_19 = icecast-newradio.cdnvideo.ru/newradio3   # 19 - ????? ?????
+preset_20 = air.radiorecord.ru:805/mdl_128           # 20 - MDL
+preset_21 = listen5.myradio24.com/atmo               # 21 - Atmosfera
+preset_22 = instrumental.royalmusic.keenetic.pro     # 22 - Royal Radio Instrumental
+preset_23 = cafe.volna.top/Cafe                      # 23 - Cafe
+preset_24 = radio.streemlion.com:2860/stream         # 24 - Instrumental Music4Ever
+preset_43 = airspectrum.cdnstream1.com:8000/1261_192 # 43 - Magic Oldies Florida
+#
+toneha = 0
+tonehf = 0
+tonela = 11
+tonelf = 11
+#
+volume = 80
+#
+wifi_00 = Upper/*******
+wifi_01 = Lower/*******
+
