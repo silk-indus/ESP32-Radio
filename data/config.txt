@@ -22,40 +22,60 @@ pin_vs_cs = 5                                        # GPIO Pin number for VS105
 pin_vs_dcs = 32                                      # GPIO Pin number for VS1053 "DCS"
 pin_vs_dreq = 4                                      # GPIO Pin number for VS1053 "DREQ"
 #
-preset = 8
-preset_00 = 109.206.96.34:8100                       #  0 - NAXI LOVE RADIO, Belgrade, Serbia
-preset_01 = icecast.stv.livebox.sk/slovensko_128.mp3 #  1 - Slovensko
-preset_02 = icecast.stv.livebox.sk/devin_128.mp3     #  2 - Dev�n
-preset_03 = icecast.stv.livebox.sk/litera_128.mp3    #  3 - Litera
-preset_04 = 109.71.67.102:8000/beta_live_high.mp3    #  4 - Radio beta
-preset_05 = 109.71.67.102:8000/beta_cspop.mp3        #. 5 - CS pop
-preset_06 = stream2.bestfm.sk/128.mp3                #  6 - Best FM
-preset_07 = stream.radioservices.sk/jemne-hi.mp3     #  7 - R�dio jemn�
-preset_08 = stream.radioservices.sk/goldenhits.mp3   #  8 - Vlna hits
-preset_09 = stream.expres.sk/96.mp3                  #  9 - Expres
-preset_10 = online.radiorelax.ua/RadioRelax          # 10 - Relax
-preset_11 = online.radiorelax.ua/RadioRelax_Int      # 11 - RadioRelax Int
-preset_12 = online.radiorelax.ua/RadioRelax_Instrumental # 12 - RadioRelax Instrumental
-preset_13 = online.radiorelax.ua/RadioRelax_Cafe     # 13 - RadioRelax Cafe
-preset_14 = online.radioplayer.ua/RadioClassic       # 14 - Radio Classic
-preset_15 = stream.rusyn.fm/rusyny.mp3               # 15 - ????? ??
-preset_16 = listen6.myradio24.com/vitaminfm          # 16 - ??????? FM
-preset_17 = air.radiorecord.ru:805/chil_128          # 17 - Chill out
-preset_18 = listen2.myradio24.com/4156               # 18 - ????? ??????????
-preset_19 = icecast-newradio.cdnvideo.ru/newradio3   # 19 - ????? ?????
-preset_20 = air.radiorecord.ru:805/mdl_128           # 20 - MDL
-preset_21 = listen5.myradio24.com/atmo               # 21 - Atmosfera
-preset_22 = instrumental.royalmusic.keenetic.pro     # 22 - Royal Radio Instrumental
-preset_23 = cafe.volna.top/Cafe                      # 23 - Cafe
-preset_24 = radio.streemlion.com:2860/stream         # 24 - Instrumental Music4Ever
-preset_43 = airspectrum.cdnstream1.com:8000/1261_192 # 43 - Magic Oldies Florida
+preset = 0
+preset_00 = stream.rusyn.fm/rusyny.mp3               # Русин ФМ
+preset_01 = icecast.stv.livebox.sk/slovensko_128.mp3 # Slovensko
+preset_02 = icecast.stv.livebox.sk/devin_128.mp3     # Devín
+preset_03 = icecast.stv.livebox.sk/litera_128.mp3    # Litera
+preset_04 = 109.71.67.102:8000/beta_live_high.mp3    # Radio beta
+preset_05 = 109.71.67.102:8000/beta_cspop.mp3        #.CS pop
+preset_06 = stream2.bestfm.sk/128.mp3                # Best FM
+preset_07 = stream.radioservices.sk/jemne-hi.mp3     # Rádio jemné
+preset_08 = stream.radioservices.sk/goldenhits.mp3   # Vlna hits
+preset_09 = stream.expres.sk/96.mp3                  # Expres
+preset_10 = online.radiorelax.ua/RadioRelax          # Relax
+preset_11 = online.radiorelax.ua/RadioRelax_Int      # RadioRelax Int
+preset_12 = online.radiorelax.ua/RadioRelax_Instrumental # RadioRelax Instrumental
+preset_13 = online.radiorelax.ua/RadioRelax_Cafe     # RadioRelax Cafe
+preset_14 = s3.voscast.com:10038/;                   # 101 SMOOTH JAZZ MELLOW MIX
+preset_15 = radio.streemlion.com:2860/stream         # Instrumental Music4Ever
+preset_16 = air.radiorecord.ru:805/chil_128          # Chill out
+preset_17 = listen2.myradio24.com/4156               # Радио Странствий
+preset_18 = 5.189.142.165:2304/stream                # Chillout Zone
+preset_19 = air.radiorecord.ru:805/mdl_128           # MDL
+preset_20 = listen5.myradio24.com/atmo               # Atmosfera
+preset_21 = instrumental.royalmusic.keenetic.pro     # Royal Radio Instrumental
+preset_22 = vh11367x.out.airtime.pro:8000/vh11367x_a # Midnight Cafe Radio
+preset_23 = ais-sa2.cdnstream1.com/2210_128.mp3      # 1000 HITS Love
+preset_24 = streams.calmradio.com/api/35/128/stream  # Calmradio
+preset_25 = stream.zeno.fm/sfpqezsh6f0uv             # Radio Nature
+preset_26 = ais-sa2.cdnstream1.com/2209_128.mp3      # Radio Lounge
+preset_27 = air-tunein.radioart.com/fSolo_piano.mp3  # Radio Art - Piano                
+preset_28 = air-tunein.radioart.com/fPiano_and_guitar.mp3 # Radio Art - Piano & Guitar  
+preset_29 = jenny.torontocast.com:8166/stream        # ATOMIC CITY                      
+preset_30 = 68.232.186.66:9710/;                     # Rádio Scalla                     
+preset_31 = streaming316.radionomy.com:80/ferdissabte# Radionomy                        
+preset_32 = online.radioplayer.ua/RadioClassic       # Radio Classic                    
+preset_33 = icecast-newradio.cdnvideo.ru/newradio3   # Новое Радио                      
+preset_34 = listen6.myradio24.com/vitaminfm          # Витамин FM                       
+preset_35 = sec-fluxfm.hoerradar.de/flux-70er-mp3-mq # 70er                             
+preset_36 = 178.79.158.160/proxy/brassbandradio?mp=/stream  # Brass radio               
+preset_37 = airspectrum.cdnstream1.com:8000/1261_192 # Magic Oldies Florida             
+preset_38 = 109.206.96.34:8100                       # NAXI LOVE RADIO, Belgrade, Serbia
+preset_39 = 
+
+   
+   
+   
+air-tunein.radioart.com/fSolo_piano.mp3  # Radio Art - Piano                 
+
 #
 toneha = 0
 tonehf = 0
 tonela = 11
 tonelf = 11
 #
-volume = 80
+volume = 86
 #
 wifi_00 = Upper/*******
 wifi_01 = Lower/*******
